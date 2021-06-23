@@ -14,7 +14,7 @@ import 'package:marketplace_app/ui/router.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MarketplaceApp(router: AppRouter()));
+    await tester.pumpWidget(RootApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

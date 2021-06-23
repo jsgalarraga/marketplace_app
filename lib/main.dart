@@ -1,10 +1,32 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:marketplace_app/ui/router.dart';
 
 void main() {
-  runApp(MarketplaceApp(
-    router: AppRouter(),
-  ));
+  runApp(RootApp());
+}
+
+class RootApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: Firebase.initializeApp(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasError) {
+            return MaterialApp(
+              home: Center(
+                child: Text('A problem has occurred when initializing the app'),
+              ),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            return MarketplaceApp(router: AppRouter());
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+  }
 }
 
 class MarketplaceApp extends StatelessWidget {
