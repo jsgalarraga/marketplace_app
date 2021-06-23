@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketplace_app/constants/strings.dart';
+import 'package:marketplace_app/cubit/cart_cubit.dart';
 import 'package:marketplace_app/cubit/products_cubit.dart';
 import 'package:marketplace_app/data/models/product.dart';
 
@@ -68,7 +69,9 @@ class ProductCard extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              BlocProvider.of<CartCubit>(context).addProduct(product);
+            },
             child: Text('Add to cart'),
           ),
         ],
