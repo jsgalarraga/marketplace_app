@@ -7,4 +7,8 @@ class Repository {
   Stream<List<Product>> getProducts() {
     return networkService.getProducts();
   }
+
+  Future<String> getProductImageUrl(String route) async {
+    return networkService.getProductImageUrl(route);
+  }
 }

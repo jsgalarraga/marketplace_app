@@ -11,8 +11,14 @@ class ProductsCubit extends Cubit<ProductsState> {
   ProductsCubit({required this.repository}) : super(ProductsInitial());
 
   void getProducts() {
+    // Updates the productList when a change occurrs in the database
     repository.getProducts().listen((productList) {
-      emit(ProductsUpdated(productList: productList));
+      // Updates the product imageUrl
+      productList.forEach((product) async {
+        product.imageUrl =
+            await repository.getProductImageUrl(product.imageRoute);
+        emit(ProductsUpdated(productList: productList));
+      });
     });
   }
 }

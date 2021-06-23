@@ -5,6 +5,7 @@ import 'package:marketplace_app/cubit/products_cubit.dart';
 import 'package:marketplace_app/data/models/product.dart';
 
 class ProductsView extends StatelessWidget {
+  // Main page with the list of products in the marketplace
   ProductsView({Key? key}) : super(key: key);
 
   void _goToCart(BuildContext context) {
@@ -32,12 +33,11 @@ class ProductsView extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 5.0,
                 mainAxisSpacing: 5.0,
+                childAspectRatio: 0.7,
               ),
               itemCount: products.length,
               itemBuilder: (BuildContext context, int index) {
-                return Center(
-                  child: Text('${products[index].name}'),
-                );
+                return ProductCard(product: products[index]);
               });
         },
       ),
@@ -47,5 +47,59 @@ class ProductsView extends StatelessWidget {
         child: Icon(Icons.shopping_cart_outlined),
       ),
     );
+  }
+}
+
+class ProductCard extends StatelessWidget {
+  // Widget to show name and image of a product and add it to the cart
+  final Product product;
+
+  const ProductCard({Key? key, required this.product}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        children: [
+          ProductImage(url: product.imageUrl),
+          Expanded(
+            child: Center(
+              child: Text('${product.name}'),
+            ),
+          ),
+          TextButton(
+            onPressed: () {},
+            child: Text('Add to cart'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ProductImage extends StatelessWidget {
+  // Widget to show the image of a product having its download url
+  final String? url;
+  final Radius imageRadius = const Radius.circular(5.0);
+
+  const ProductImage({Key? key, required this.url}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (url != null) {
+      return ClipRRect(
+        borderRadius:
+            BorderRadius.only(topLeft: imageRadius, topRight: imageRadius),
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: FittedBox(
+            child: Image.network(url!),
+            fit: BoxFit.cover,
+            clipBehavior: Clip.hardEdge,
+          ),
+        ),
+      );
+    }
+    return Center(child: CircularProgressIndicator());
   }
 }

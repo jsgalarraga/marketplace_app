@@ -7,6 +7,7 @@ void main() {
 }
 
 class RootApp extends StatelessWidget {
+  // Root widget in charge of initializing Firebase and handling its connection
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -30,6 +31,7 @@ class RootApp extends StatelessWidget {
 }
 
 class MarketplaceApp extends StatelessWidget {
+  // App executed when Firebase connection succeeds
   final AppRouter router;
 
   const MarketplaceApp({Key? key, required this.router}) : super(key: key);

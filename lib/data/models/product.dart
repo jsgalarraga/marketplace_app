@@ -3,46 +3,52 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Product {
+  String id;
   String name;
   num price;
-  String imageUrl;
-  String id;
+  String imageRoute;
+  String? imageUrl;
   Product({
+    required this.id,
     required this.name,
     required this.price,
-    required this.imageUrl,
-    required this.id,
+    required this.imageRoute,
+    this.imageUrl,
   });
 
   Product copyWith({
-    String? name,
-    double? price,
-    String? imageUrl,
     String? id,
+    String? name,
+    num? price,
+    String? imageRoute,
+    String? imageUrl,
   }) {
     return Product(
+      id: id ?? this.id,
       name: name ?? this.name,
       price: price ?? this.price,
+      imageRoute: imageRoute ?? this.imageRoute,
       imageUrl: imageUrl ?? this.imageUrl,
-      id: id ?? this.id,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'price': price,
+      'imageRoute': imageRoute,
       'imageUrl': imageUrl,
-      'id': id,
     };
   }
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
+      id: map['id'],
       name: map['name'],
       price: map['price'],
+      imageRoute: map['imageRoute'],
       imageUrl: map['imageUrl'],
-      id: map['id'],
     );
   }
 
@@ -56,14 +62,14 @@ class Product {
     return Product(
       name: data['name'],
       price: data['price'],
-      imageUrl: data['image'],
+      imageRoute: data['image'],
       id: snap.id,
     );
   }
 
   @override
   String toString() {
-    return 'Product(name: $name, price: $price, imageUrl: $imageUrl, id: $id)';
+    return 'Product(id: $id, name: $name, price: $price, imageRoute: $imageRoute, imageUrl: $imageUrl)';
   }
 
   @override
@@ -71,14 +77,19 @@ class Product {
     if (identical(this, other)) return true;
 
     return other is Product &&
+        other.id == id &&
         other.name == name &&
         other.price == price &&
-        other.imageUrl == imageUrl &&
-        other.id == id;
+        other.imageRoute == imageRoute &&
+        other.imageUrl == imageUrl;
   }
 
   @override
   int get hashCode {
-    return name.hashCode ^ price.hashCode ^ imageUrl.hashCode ^ id.hashCode;
+    return id.hashCode ^
+        name.hashCode ^
+        price.hashCode ^
+        imageRoute.hashCode ^
+        imageUrl.hashCode;
   }
 }
