@@ -2,10 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketplace_app/cubit/cart_cubit.dart';
+import 'package:marketplace_app/cubit/checkout_cubit.dart';
 import 'package:marketplace_app/cubit/products_cubit.dart';
 import 'package:marketplace_app/data/repository.dart';
 import 'package:marketplace_app/ui/router.dart';
-import 'package:marketplace_app/ui/styles/colors.dart';
 
 void main() {
   runApp(RootApp());
@@ -51,6 +51,9 @@ class MarketplaceApp extends StatelessWidget {
         ),
         BlocProvider<CartCubit>(
           create: (context) => CartCubit(repository: repository),
+        ),
+        BlocProvider<CheckoutCubit>(
+          create: (context) => CheckoutCubit(repository: repository),
         ),
       ],
       child: MaterialApp(

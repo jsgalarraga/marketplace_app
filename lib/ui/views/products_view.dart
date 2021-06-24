@@ -4,7 +4,6 @@ import 'package:marketplace_app/constants/strings.dart';
 import 'package:marketplace_app/cubit/cart_cubit.dart';
 import 'package:marketplace_app/cubit/products_cubit.dart';
 import 'package:marketplace_app/data/models/product.dart';
-import 'package:marketplace_app/ui/styles/colors.dart';
 import 'package:marketplace_app/ui/styles/text_button.dart';
 
 class ProductsView extends StatelessWidget {

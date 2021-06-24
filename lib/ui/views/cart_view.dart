@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketplace_app/cubit/cart_cubit.dart';
+import 'package:marketplace_app/cubit/checkout_cubit.dart';
 import 'package:marketplace_app/data/models/cart_item.dart';
 import 'package:marketplace_app/ui/styles/text_button.dart';
 
@@ -31,7 +32,7 @@ class CartView extends StatelessWidget {
                   },
                 ),
               ),
-              CheckoutButton(),
+              Checkout(),
             ],
           );
         },
@@ -113,6 +114,28 @@ class CartTileTrailing extends StatelessWidget {
   }
 }
 
+class Checkout extends StatelessWidget {
+  const Checkout({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<CheckoutCubit, CheckoutState>(
+      listener: (BuildContext context, state) {
+        if (state is CheckoutSuccess) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return CheckoutDialog();
+            },
+          );
+        }
+      },
+      child: CheckoutButton(),
+    );
+  }
+}
+
 class CheckoutButton extends StatelessWidget {
   const CheckoutButton({Key? key}) : super(key: key);
 
@@ -123,11 +146,42 @@ class CheckoutButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            BlocProvider.of<CheckoutCubit>(context).checkout();
+          },
           child: Text('Checkout'),
           style: flatButtonStyle,
         ),
       ),
+    );
+  }
+}
+
+class CheckoutDialog extends StatelessWidget {
+  const CheckoutDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: BlocBuilder<CheckoutCubit, CheckoutState>(
+        builder: (context, state) {
+          if (state is CheckoutSuccess) {
+            if (state.success) {
+              return Text('Order successful');
+            }
+          }
+          return Text('Order failed');
+        },
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          },
+          child: Text('Continue'),
+          style: flatButtonStyle,
+        )
+      ],
     );
   }
 }

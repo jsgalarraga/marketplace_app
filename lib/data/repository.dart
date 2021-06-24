@@ -25,4 +25,13 @@ class Repository {
   void removeProductFromCart(Product product) {
     cart.removeWhere((item) => item.product == product);
   }
+
+  bool cartCheckout() {
+    // Mocked success when checking out
+    return true;
+  }
+
+  void emptyCart() {
+    cart.removeWhere((_) => true);
+  }
 }
