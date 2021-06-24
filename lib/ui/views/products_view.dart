@@ -4,6 +4,8 @@ import 'package:marketplace_app/constants/strings.dart';
 import 'package:marketplace_app/cubit/cart_cubit.dart';
 import 'package:marketplace_app/cubit/products_cubit.dart';
 import 'package:marketplace_app/data/models/product.dart';
+import 'package:marketplace_app/ui/styles/colors.dart';
+import 'package:marketplace_app/ui/styles/text_button.dart';
 
 class ProductsView extends StatelessWidget {
   // Main page with the list of products in the marketplace
@@ -32,8 +34,8 @@ class ProductsView extends StatelessWidget {
           return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 5.0,
-                mainAxisSpacing: 5.0,
+                crossAxisSpacing: 6.0,
+                mainAxisSpacing: 6.0,
                 childAspectRatio: 0.7,
               ),
               itemCount: products.length,
@@ -65,14 +67,24 @@ class ProductCard extends StatelessWidget {
           ProductImage(url: product.imageUrl),
           Expanded(
             child: Center(
-              child: Text('${product.name}'),
+              child: Text(
+                '${product.name}',
+                style: TextStyle(fontSize: 16),
+              ),
             ),
           ),
-          TextButton(
-            onPressed: () {
-              BlocProvider.of<CartCubit>(context).addProduct(product);
-            },
-            child: Text('Add to cart'),
+          SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: TextButton(
+                onPressed: () {
+                  BlocProvider.of<CartCubit>(context).addProduct(product);
+                },
+                child: Text('Add to cart'),
+                style: flatButtonStyle,
+              ),
+            ),
           ),
         ],
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marketplace_app/cubit/cart_cubit.dart';
 import 'package:marketplace_app/data/models/cart_item.dart';
+import 'package:marketplace_app/ui/styles/text_button.dart';
 
 class CartView extends StatelessWidget {
   const CartView({Key? key}) : super(key: key);
@@ -49,7 +50,10 @@ class CartTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CartTileLeading(item: item),
-      title: Text(item.product.name),
+      title: Text(
+        item.product.name,
+        style: TextStyle(fontSize: 18),
+      ),
       trailing: CartTileTrailing(item: item),
     );
   }
@@ -114,9 +118,16 @@ class CheckoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {},
-      child: Text('Checkout'),
+    return SizedBox(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextButton(
+          onPressed: () {},
+          child: Text('Checkout'),
+          style: flatButtonStyle,
+        ),
+      ),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:marketplace_app/cubit/cart_cubit.dart';
 import 'package:marketplace_app/cubit/products_cubit.dart';
 import 'package:marketplace_app/data/repository.dart';
 import 'package:marketplace_app/ui/router.dart';
+import 'package:marketplace_app/ui/styles/colors.dart';
 
 void main() {
   runApp(RootApp());
@@ -56,7 +57,7 @@ class MarketplaceApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Marketplace App',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.teal,
         ),
         onGenerateRoute: router.generateRoute,
       ),
